@@ -1,7 +1,7 @@
 {
   "name": "gohiei-koa2-ratelimit",
   "author": "gohiei",
-  "version": "0.8.1",
+  "version": "0.8.2",
   "description": "IP rate-limiting middleware for Koajs 2. Use to limit repeated requests to APIs and/or endpoints such as password reset.",
   "main": "src/index.js",
   "engines": {
