@@ -47,7 +47,7 @@ class RedisStore extends Store {
    */
   async _hit(key, options, weight) {
 
-    let [counter, dateEnd] = await this.client.multi().get(key).ttl(key).exec();
+    let [counter, dateEnd] = await this.client.multi().get(key).pttl(key).exec();
 
     if(counter === null) {
       counter = weight;
@@ -57,10 +57,10 @@ class RedisStore extends Store {
       await this.client.setex(key, seconds, counter);
     }else {
       if (dateEnd < 0) {
-        dateEnd = 1;
+        dateEnd = 0;
       }
 
-      [counter] = await this.client.multi().incrby(key, weight).expire(key, dateEnd).exec();
+      counter = await this.client.incrby(key, weight);
 
       dateEnd = Date.now() + dateEnd;
     }
